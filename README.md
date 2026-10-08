@@ -1,5 +1,27 @@
 # P11 · 赛事成绩管理 MCP Server
 
+### 服务介绍
+
+> ⚠️ 本节与下一节的标题名是平台要求的字段名,不要改:提交到魔搭 ModelScope MCP 广场时,「从 GitHub 仓库快速创建」会按名字从根 README 提取这两节内容。
+
+具身智能大赛「赛事成绩管理」MCP 服务:为比赛现场提供选手登记、成绩录入、成绩查询(支持姓名模糊匹配)、榜单排名(并列名次)、赛程咨询、当前环节 6 个工具。成绩录入带裁判令牌校验链与幂等防重(语音重复播报不覆盖成绩),全部工具直接返回自然语言文本,适合机器人语音场景。
+
+### 服务配置
+
+```json
+{
+  "mcpServers": {
+    "contest-score": {
+      "command": "uvx",
+      "args": ["contest-score"],
+      "env": {
+        "JUDGE_TOKEN": "judge-2026"
+      }
+    }
+  }
+}
+```
+
 ## 1. 本地运行与自测
 
 ```bash
@@ -33,11 +55,10 @@ npx @modelcontextprotocol/inspector python contest_score_server/server.py
 
 灵心云端无法访问内网 IP,三选一(详见题库 P11「部署与网络说明」):
 
-**方式 A · ModelScope「自定义 MCP 部署」(国内首选)**
-1. 把本目录推到 Gitee/GitHub 仓库;
-2. ModelScope → MCP 部署服务 → 自定义 MCP → 安装命令填
-   `uvx --from git+https://gitee.com/<你的仓库>.git contest-score`(写法以平台为准,先实测);
-3. 平台分配公网 URL 后,进入下一步。
+**方式 A · ModelScope「创建 MCP Server」+ 可托管部署(国内首选)**
+1. 本仓库已推送到 GitHub,根 README 含「服务介绍」「服务配置」两节(魔搭按名字解析);
+2. 魔搭 → MCP 广场 → 创建 MCP Server → 从 GitHub 仓库快速创建:填仓库地址,托管类型选**可托管部署**(选"仅分发展示"不会给公网 URL,灵心无法调用);
+3. 平台构建托管实例并分配公网 URL 后,进入下一步。
 
 **方式 B · 云服务器/VPS**:`pip install -e . && contest-score`,开放 9000 端口。
 
