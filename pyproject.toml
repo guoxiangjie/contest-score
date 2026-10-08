@@ -1,7 +1,7 @@
 [project]
-name = "contest-score-server"
+name = "contest-score"
 version = "1.0.0"
-description = "具身智能大赛 P11:赛事成绩管理 MCP Server"
+description = "具身智能大赛 P11:赛事成绩管理 MCP Server(6 工具,含校验链/幂等/持久化)"
 requires-python = ">=3.10"
 dependencies = ["mcp>=1.2.0,<2"]
 
