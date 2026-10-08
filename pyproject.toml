@@ -1,0 +1,16 @@
+[project]
+name = "contest-score-server"
+version = "1.0.0"
+description = "具身智能大赛 P11:赛事成绩管理 MCP Server"
+requires-python = ">=3.10"
+dependencies = ["mcp>=1.2.0,<2"]
+
+[project.scripts]
+contest-score = "contest_score_server.server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["contest_score_server"]

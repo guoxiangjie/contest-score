@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+contest_db.json
+inventory_audit.log
+debug_dump/
+.DS_Store
