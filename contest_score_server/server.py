@@ -10,7 +10,7 @@ from pathlib import Path
 
 from mcp.server.fastmcp import FastMCP
 
-JUDGE_TOKEN = os.environ.get("JUDGE_TOKEN", "judge-2026")
+JUDGE_TOKEN = os.environ.get("JUDGE_TOKEN", "智元")
 # 语音多轮:用户口述的令牌是裁判姓名的中文说法(ASR 识别为"郭向杰"),
 # 与环境变量里的拼音令牌等价;多个别名用英文逗号分隔
 JUDGE_TOKEN_ALIASES = [a.strip() for a in
