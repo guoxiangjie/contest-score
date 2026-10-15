@@ -11,10 +11,6 @@ from pathlib import Path
 from mcp.server.fastmcp import FastMCP
 
 JUDGE_TOKEN = os.environ.get("JUDGE_TOKEN", "智元")
-# 语音多轮:用户口述的令牌是裁判姓名的中文说法(ASR 识别为"郭向杰"),
-# 与环境变量里的拼音令牌等价;多个别名用英文逗号分隔
-JUDGE_TOKEN_ALIASES = [a.strip() for a in
-                       os.environ.get("JUDGE_TOKEN_ALIASES", "郭向杰").split(",") if a.strip()]
 ASK_TOKEN = "请说出裁判令牌。"
 DB_PATH = Path(os.environ.get("DB_PATH", "contest_db.json"))
 HOST = os.environ.get("HOST", "0.0.0.0")
@@ -42,7 +38,7 @@ def save_db(db: dict) -> None:
 
 
 def _token_ok(token: str) -> bool:
-    return token == JUDGE_TOKEN or token in JUDGE_TOKEN_ALIASES
+    return token == JUDGE_TOKEN
 
 
 def core_register(name: str, judge_token: str) -> str:
@@ -126,7 +122,7 @@ def register_player(name: str, judge_token: str) -> str:
     """裁判为选手报名登记。当用户说"报名/登记某选手/给某某报名"时调用;
     查询成绩、榜单、赛程时不调用。name 为选手中文姓名。
     多轮规则:若用户本次没说裁判令牌,以 judge_token="" 调用,工具会返回
-    索要令牌的提示并播报给用户;下一轮用户只回答令牌(如"郭向杰")时,
+    索要令牌的提示并播报给用户;下一轮用户只回答令牌(如"智元")时,
     必须再次调用本工具,带上原姓名与该令牌,不要只回一句话了事。"""
     return core_register(name, judge_token)
 
@@ -137,7 +133,7 @@ def record_score(name: str, stage: str, score: float, judge_token: str) -> str:
     选手查询自己成绩时不调用(应使用查成绩工具)。stage 只能是:理论/实操/编程;
     score 为 0 到 100 的分数。
     多轮规则:若用户本次没说裁判令牌,以 judge_token="" 调用,工具会返回
-    索要令牌的提示并播报给用户;下一轮用户只回答令牌(如"郭向杰")时,
+    索要令牌的提示并播报给用户;下一轮用户只回答令牌(如"智元")时,
     必须再次调用本工具,带上原姓名/环节/分数与该令牌。
     同一选手同一环节重复录入不会覆盖,始终返回首次录入的结果(语音重试的幂等保护)。"""
     return core_record(name, stage, score, judge_token)
